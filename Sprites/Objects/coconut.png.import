@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bob.png-21491ad310c90859aca7d6cfe5f64950.stex"
+path="res://.import/coconut.png-ce7be9e97e4761c259b42fd7494f330e.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Player/bob.png"
-dest_files=[ "res://.import/bob.png-21491ad310c90859aca7d6cfe5f64950.stex" ]
+source_file="res://Sprites/Objects/coconut.png"
+dest_files=[ "res://.import/coconut.png-ce7be9e97e4761c259b42fd7494f330e.stex" ]
 
 [params]
 
