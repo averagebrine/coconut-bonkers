@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/bob_idle.png-a72c42a76d62dae59f2aa6fb67c431ad.stex"
+path="res://.import/bob.png-21491ad310c90859aca7d6cfe5f64950.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/Player/bob_idle.png"
-dest_files=[ "res://.import/bob_idle.png-a72c42a76d62dae59f2aa6fb67c431ad.stex" ]
+source_file="res://Sprites/Player/bob.png"
+dest_files=[ "res://.import/bob.png-21491ad310c90859aca7d6cfe5f64950.stex" ]
 
 [params]
 
