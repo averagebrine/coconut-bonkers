@@ -23,16 +23,18 @@ func _process(_delta):
 		
 		emitter.emitting = true
 		
-		if(holdingCoconut):
+		if holdingCoconut:
 			animator.play("run_coconut")
 		else:
 			animator.play("run")
-	elif holdingCoconut:
-		animator.play("idle_coconut")
 	else:
+		
 		emitter.emitting = false
 		
-		animator.play("idle")
+		if holdingCoconut:
+			animator.play("idle_coconut")
+		else:
+			animator.play("idle")
 
 func _physics_process(_delta):
 	move()
