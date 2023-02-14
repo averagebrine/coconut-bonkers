@@ -3,6 +3,7 @@ extends KinematicBody2D
 onready var sprite : Sprite = get_node("Sprite")
 onready var animator : AnimationPlayer = get_node("Animator")
 onready var radius : Area2D = get_node("InteractionRadius")
+onready var emitter : CPUParticles2D = get_node("Particles")
 var movementSpeed : float = 200
 var movementSmooth : float = 0.2
 
@@ -19,6 +20,9 @@ func _process(_delta):
 
 	# animation
 	if abs(velocity.x) > 100 || abs(velocity.y) > 100:
+		
+		emitter.emitting = true
+		
 		if(holdingCoconut):
 			animator.play("run_coconut")
 		else:
@@ -26,6 +30,8 @@ func _process(_delta):
 	elif holdingCoconut:
 		animator.play("idle_coconut")
 	else:
+		emitter.emitting = false
+		
 		animator.play("idle")
 
 func _physics_process(_delta):

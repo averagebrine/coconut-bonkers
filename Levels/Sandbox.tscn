@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Bob.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Coconut.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=4]
-[ext_resource path="res://Scenes/Suspicious Sand.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/SuspiciousSand.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/Tree.tscn" type="PackedScene" id=6]
 
 [node name="Level" type="Node2D"]
