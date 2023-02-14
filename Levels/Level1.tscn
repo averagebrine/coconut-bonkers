@@ -15,7 +15,6 @@ tile_set = ExtResource( 1 )
 cell_size = Vector2( 8, 8 )
 cell_custom_transform = Transform2D( 8, 0, 0, 8, 0, 0 )
 format = 1
-tile_data = PoolIntArray( 393227, 5, 0 )
 
 [node name="Island" type="TileMap" parent="."]
 z_index = 20
