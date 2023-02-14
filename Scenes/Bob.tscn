@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Sprites/Characters/bob.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Bob.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/Shadows/bob_shadow.png" type="Texture" id=3]
 [ext_resource path="res://Particles/SandRun.tscn" type="PackedScene" id=4]
 
-[sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 3.5, 2.5 )
+[sub_resource type="CircleShape2D" id=10]
+radius = 3.0
 
 [sub_resource type="CircleShape2D" id=7]
+radius = 11.5
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -42,6 +43,37 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 12, 13, 12, 14, 15, 12, 12, 13, 12, 12, 17, 16, 17, 12, 12, 13, 12 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "lob"
+length = 0.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 28 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "finishedLobbing"
+} ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -86,6 +118,7 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 hframes = 6
 vframes = 5
+frame = 28
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.25098 )
@@ -95,11 +128,10 @@ texture = ExtResource( 3 )
 
 [node name="Collider" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( 0, 5 )
-shape = SubResource( 4 )
+position = Vector2( 0, 4.5 )
+shape = SubResource( 10 )
 
 [node name="InteractionRadius" type="Area2D" parent="."]
-visible = false
 
 [node name="Radius" type="CollisionShape2D" parent="InteractionRadius"]
 position = Vector2( 0, 2 )
@@ -113,5 +145,6 @@ emitting = false
 [node name="Animator" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 2 )
 anims/idle_coconut = SubResource( 8 )
+anims/lob = SubResource( 9 )
 anims/run = SubResource( 3 )
 anims/run_coconut = SubResource( 6 )
