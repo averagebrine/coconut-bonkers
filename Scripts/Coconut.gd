@@ -1,15 +1,22 @@
 extends Area2D
 
+onready var sprite : Sprite = get_node("Sprite")
+onready var shadow : Sprite = get_node("Shadow")
 onready var animator : AnimationPlayer = get_node("Animator")
 onready var emitter : CPUParticles2D = get_node("Particles")
+onready var breakEmitter : CPUParticles2D = get_node("BreakParticles")
+var target = null
 
-func _ready():
+func drop():
 	animator.play("drop")
-	z_index = 150
+	z_index = 110
+
+func bounce(snake):
+	monitorable = false
+	target = snake
 	
-func bounce():
 	animator.play("drop_bounce")
-	z_index = 150
+	z_index = 110
 	
 func doParticles():
 	emitter.emitting = true
@@ -17,6 +24,19 @@ func doParticles():
 		return
 	z_index = 50
 
+func killSnake():
+	if target != null:
+		target.die()
+	
 func break():
 	emitter.emitting = true
-	z_index = 50
+	breakEmitter.emitting = true
+	sprite.visible = false
+	shadow.visible = false
+	monitorable = false
+	
+	# destroy the coconut once it's finished with it's particles
+	while breakEmitter.emitting == true:
+		yield(get_tree().create_timer(1), "timeout")
+	queue_free()
+		
