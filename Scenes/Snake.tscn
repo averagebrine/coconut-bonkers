@@ -26,8 +26,9 @@ tracks/0/keys = {
 "values": [ 0, 3, 1, 2, 3, 0 ]
 }
 
-[node name="KinematicBody2D" type="KinematicBody2D"]
+[node name="Snake" type="KinematicBody2D"]
 script = ExtResource( 3 )
+path_to_player = NodePath(".")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.5, 3.5 )
@@ -49,3 +50,10 @@ shape = SubResource( 1 )
 [node name="Animator" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Snake")
 anims/idle = SubResource( 2 )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+target_desired_distance = 10.0
+
+[node name="PathTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
