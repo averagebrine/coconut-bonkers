@@ -14,12 +14,17 @@ var movementSmooth : float = 0.2
 
 onready var animator : AnimationPlayer = get_node("Animator")
 
+var lingerTime : float = 3
+
+var isDead : bool = false
+
 func _ready():
 	animator.play("idle")
 	
 	#more ai stuff
 	_update_pathfinding()
 	timer.connect("timeout", self, "_update_pathfinding")
+	
 func _physics_process(delta: float):
 	if _agent.is_navigation_finished():
 		return
@@ -31,6 +36,13 @@ func _physics_process(delta: float):
 	velocity += steering
 	
 	velocity = move_and_slide(lerp(velocity, desired_velocity, movementSmooth), Vector2.UP)
+
+func die():
+	animator.play("death")
+	isDead = true
+	
+	yield(get_tree().create_timer(lingerTime), "timeout")
+	animator.play("fade")
 	
 func _update_pathfinding():
 	_agent.set_target_location(_player.global_position)

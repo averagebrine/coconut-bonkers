@@ -5,6 +5,8 @@ onready var shadow : Sprite = get_node("Shadow")
 onready var animator : AnimationPlayer = get_node("Animator")
 onready var emitter : CPUParticles2D = get_node("Particles")
 onready var breakEmitter : CPUParticles2D = get_node("BreakParticles")
+onready var audioPlayer : AudioStreamPlayer = get_node("AudioPlayer")
+
 var target = null
 
 func drop():
@@ -27,6 +29,7 @@ func doParticles():
 func killSnake():
 	if target != null:
 		target.die()
+		audioPlayer.play()
 	
 func break():
 	emitter.emitting = true
