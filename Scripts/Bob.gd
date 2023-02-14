@@ -84,9 +84,10 @@ func interact():
 			if nearestCoconut == null or dist < nearestDist:
 				nearestCoconut = coconut
 				nearestDist = dist
-				
-		nearestCoconut.queue_free()
-		holdingCoconut = true
+			
+		if nearestCoconut != null:	
+			nearestCoconut.queue_free()
+			holdingCoconut = true
 
 func drop():
 	# spawn a coconut at player position
