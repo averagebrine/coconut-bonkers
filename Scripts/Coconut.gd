@@ -28,7 +28,7 @@ func doParticles():
 
 func killSnake():
 	if target != null:
-		target.die()
+		target.state = target.DEATH
 		audioPlayer.play()
 	
 func break():

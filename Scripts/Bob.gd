@@ -4,25 +4,29 @@ onready var sprite : Sprite = get_node("Sprite")
 onready var animator : AnimationPlayer = get_node("Animator")
 onready var radius : Area2D = get_node("InteractionRadius")
 onready var emitter : CPUParticles2D = get_node("Particles")
+var health : int = 6
 var movementSpeed : float = 200
 var movementSmooth : float = 0.2
+var dead : bool =  false
 
+# some of these variables don't need to be here and could just be declared as needed
 var velocity : Vector2 = Vector2()
 var targetVelocity : Vector2 = Vector2()
 var holdingCoconut : bool = false
+var holdingShovel : bool = false
 var lobbing : bool = false
 var interacting : bool = false
 var movementIdle : bool = true
 
+signal updateHealth
 signal placeCoconut
 signal bonkCoconut
 
 func _process(_delta):
-		
+	animate()
+	
 	if Input.is_action_just_pressed("interact"):
 		interact()
-
-	animate()
 
 func _physics_process(_delta):
 	move()
@@ -62,26 +66,28 @@ func move():
 		targetVelocity = targetVelocity.normalized()
 
 func animate():
+	
 	if lobbing:
 		animator.play("lob")
 		emitter.emitting = false
 	elif abs(velocity.x) > 100 || abs(velocity.y) > 100:
-		
 		emitter.emitting = true
 		
 		if holdingCoconut:
 			animator.play("run_coconut")
+		elif holdingShovel:
+			animator.play("run_shovel")
 		else:
 			animator.play("run")
 	else:
-		
 		emitter.emitting = false
 		
 		if holdingCoconut:
 			animator.play("idle_coconut")
+		elif holdingShovel:
+			animator.play("idle_shovel")
 		else:
 			animator.play("idle")
-	pass
 
 func interact():
 	
@@ -119,7 +125,7 @@ func interact():
 		# find the nearest snake
 		for snake in nearbySnakes:
 			# he's already dead, have mercy!
-			if snake.isDead == true:
+			if snake.state == snake.DEATH:
 				continue
 				
 			var dist = position.distance_to(snake.position)
@@ -170,3 +176,15 @@ func bonk(snake):
 
 func finishedLobbing():
 	lobbing = false
+
+func takeDamage():
+	health = health -1
+	
+	emit_signal("updateHealth", health)
+	
+	if health == 0:
+		print("I'm fucking dead.")
+
+func death():
+	# play a death animation, then start the game over screen
+	pass

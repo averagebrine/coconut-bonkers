@@ -1,48 +1,117 @@
 extends KinematicBody2D
 
-#AI Stuff
-export var path_to_player := NodePath()
-onready var _player := get_node(path_to_player)
-onready var _agent: NavigationAgent2D = $NavigationAgent2D
-onready var timer = $PathTimer
-
-var velocity := Vector2.ZERO
-export var movementSpeed : float = 50
-var movementSmooth : float = 0.2
-
-
-
+onready var sprite : Sprite = get_node("Sprite")
 onready var animator : AnimationPlayer = get_node("Animator")
+onready var radius : Area2D = get_node("BiteRadius")
+
+onready var player = get_tree().root.get_node("Level/Bob")
 
 var lingerTime : float = 3
-
+var isAttacking : bool = false
+var isIdling : bool = false
 var isDead : bool = false
 
+var movementSpeed : float = 65
+var movementSmooth : float = 0.2
+
+var brainCapacity : float = 1 # how often the snake thinks, in seconds
+var attackRange : float = 12
+var detectionRange : float = 69
+
+var velocity : Vector2 = Vector2()
+var targetVelocity : Vector2 = Vector2()
+
+# state machine
+enum { IDLE, CHASE, ATTACK, DEATH }
+var state = IDLE
+
 func _ready():
-	animator.play("idle")
+	state = IDLE
+	brainCapacity = rand_range(0.1, 4)
 	
-	#more ai stuff
-	_update_pathfinding()
-	timer.connect("timeout", self, "_update_pathfinding")
+	yield(get_tree().create_timer(brainCapacity), "timeout")
+	brain()
+
+func _process(delta):
+	animate()
 	
-func _physics_process(delta: float):
-	if _agent.is_navigation_finished():
-		return
-		
-	var direction := global_position.direction_to(_agent.get_next_location())
+	# snake state machine (snakemachine)
+	if player != null:
+		match state:
+			IDLE:
+				isIdling = true
+				isAttacking = false
+			CHASE:
+				isIdling = false
+				isAttacking = false
+				move(player.global_position, delta)
+				
+				if position.distance_to(player.position) <= attackRange:
+					state = ATTACK
+					
+			ATTACK:
+				isIdling = false
+				isAttacking = true
+				tryBite()
+			DEATH:
+				isIdling = false
+				isAttacking = false
+				if !isDead:
+					die()
+
+
+func move(target, delta):
+	velocity = move_and_slide(lerp(velocity, targetVelocity * movementSpeed, movementSmooth), Vector2.UP)
 	
-	var desired_velocity := direction * movementSpeed
-	var steering := (desired_velocity - velocity) * delta * 4.0
+	targetVelocity = (target - global_position).normalized() 
+	var steering = (targetVelocity - velocity) * delta * 2.5
 	velocity += steering
+
+func animate():
+	if velocity.x > 1:
+		sprite.flip_h = false
+	elif velocity.x < -1:
+		sprite.flip_h = true
 	
-	velocity = move_and_slide(lerp(velocity, desired_velocity, movementSmooth), Vector2.UP)
+	if state != DEATH && !isAttacking:
+		if abs(velocity.x) > 1 || abs(velocity.y) > 1:
+			animator.play("run")
+		else:
+			animator.play("idle")
+
+func brain():
+	if isDead:
+		return
+
+	var space_state = get_world_2d().direct_space_state
+	var los = space_state.intersect_ray(get_global_position(), player.get_global_position(), [self, player], collision_mask)
+
+	if los.empty() && position.distance_to(player.position) <= detectionRange:
+		# go get 'em tiger
+		state = CHASE
+	else:
+		state = IDLE
+		velocity = Vector2.ZERO
+
+	yield(get_tree().create_timer(brainCapacity), "timeout")
+	brain()
 
 func die():
-	animator.play("death")
 	isDead = true
-	
+
+	animator.play("death")
+	z_index = z_index - 5
+
 	yield(get_tree().create_timer(lingerTime), "timeout")
 	animator.play("fade")
-	
-func _update_pathfinding():
-	_agent.set_target_location(_player.global_position)
+
+func tryBite():
+	if position.distance_to(player.position) <= attackRange:
+		animator.play("chomp")
+
+func bite():
+	var nearby = radius.get_overlapping_areas()
+	for obj in nearby:
+		if obj.is_in_group("players"):
+			player.takeDamage()
+			break

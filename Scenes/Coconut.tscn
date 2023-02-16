@@ -91,6 +91,7 @@ tracks/2/keys = {
 
 [node name="Coconut" type="Area2D" groups=["coconuts"]]
 z_index = 50
+collision_layer = 8
 monitoring = false
 script = ExtResource( 4 )
 
