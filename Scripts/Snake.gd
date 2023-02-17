@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 onready var sprite : Sprite = get_node("Sprite")
 onready var animator : AnimationPlayer = get_node("Animator")
+onready var emitter : CPUParticles2D = get_node("Particles")
 onready var radius : Area2D = get_node("BiteRadius")
 
 onready var player = get_tree().root.get_node("Level/Bob")
@@ -27,7 +28,7 @@ var state = IDLE
 
 func _ready():
 	state = IDLE
-	brainCapacity = rand_range(0.1, 4)
+	brainCapacity = rand_range(0.1, 3)
 	
 	yield(get_tree().create_timer(brainCapacity), "timeout")
 	brain()
@@ -59,7 +60,6 @@ func _process(delta):
 				if !isDead:
 					die()
 
-
 func move(target, delta):
 	velocity = move_and_slide(lerp(velocity, targetVelocity * movementSpeed, movementSmooth), Vector2.UP)
 	
@@ -70,9 +70,11 @@ func move(target, delta):
 func animate():
 	if velocity.x > 1:
 		sprite.flip_h = false
+		emitter.position = Vector2(5, emitter.position.y)
 	elif velocity.x < -1:
 		sprite.flip_h = true
-	
+		emitter.position = Vector2(-5, emitter.position.y)
+		
 	if state != DEATH && !isAttacking:
 		if abs(velocity.x) > 1 || abs(velocity.y) > 1:
 			animator.play("run")
@@ -114,4 +116,5 @@ func bite():
 	for obj in nearby:
 		if obj.is_in_group("players"):
 			player.takeDamage()
+			emitter.emitting = true
 			break

@@ -1,7 +1,19 @@
 extends Node2D
 
+var rng = RandomNumberGenerator.new()
+
+onready var cam = get_node("Camera")
+onready var island = get_node("Island")
 onready var player = get_node("Bob")
+
 var coconutOffset : float = 48
+var shovelOffset : float = -48
+var digSpeed : float = 0.075
+
+var sandTile = 0
+var dugSandTile = 4
+var treasureTile = 5
+var dugTreasureSandTile = 6
 
 onready var HUD = get_node("HUD")
 onready var heart = load("res://Sprites/UI/heart.png")
@@ -9,10 +21,64 @@ onready var halfHeart = load("res://Sprites/UI/half_heart.png")
 onready var emptyHeart = load("res://Sprites/UI/empty_heart.png")
 
 func _ready():
+	rng.randomize()
+	placeTreasure()
+	
 	player.connect("placeCoconut", self, "_placeCoconut")
 	player.connect("bonkCoconut", self, "_bonkCoconut")
 	player.connect("updateHealth", self, "_updateHealth")
+	player.connect("dig", self, "_dig")
+
+func placeTreasure():
+	# get all tiles
+	var tiles = island.get_used_cells_by_id(sandTile)
+	var sandTiles = []
+
+	# iterate through all tiles, check autotile coords
+	for tile in tiles:
+		# check if it's a base sand tile!!!
+		if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1):
+			sandTiles.append(tile)
+
+	# randomize treasure location on one of the sand tiles
+	var tonightsBiggestLoser = sandTiles[rng.randi() % sandTiles.size()]
+	island.set_cell(tonightsBiggestLoser.x, tonightsBiggestLoser.y, treasureTile)
+
+func dropShovel(shovelPosition):
+	var shovelScene = load("res://Scenes/Shovel.tscn")
+	var shovelInstance = shovelScene.instance()
 	
+	add_child(shovelInstance)
+	shovelInstance.set_global_position(shovelPosition + (Vector2.DOWN * shovelOffset))
+	shovelInstance.drop()
+
+func _dig(worldPosition):
+	# check a 3x3 grid for sand tiles. if any of theme are the treasure, did only that tile
+	# and finish the game. if not, replace all regular sand tiles with dug out sand tiles.
+	var tilePosition = island.world_to_map(worldPosition)
+	
+	var treasureTiles = island.get_used_cells_by_id(treasureTile)
+	var sandTiles = island.get_used_cells_by_id(sandTile)
+	
+	var _checkTiles = [
+		Vector2(tilePosition.x - 1, tilePosition.y - 1), Vector2(tilePosition.x, tilePosition.y - 1), Vector2(tilePosition.x + 1, tilePosition.y - 1),
+		Vector2(tilePosition.x - 1, tilePosition.y), Vector2(tilePosition.x, tilePosition.y), Vector2(tilePosition.x + 1, tilePosition.y),
+		Vector2(tilePosition.x - 1, tilePosition.y + 1), Vector2(tilePosition.x, tilePosition.y + 1), Vector2(tilePosition.x + 1, tilePosition.y + 1)]
+		
+	var checkTiles = [Vector2(tilePosition.x, tilePosition.y), Vector2(tilePosition.x + 1, tilePosition.y), Vector2(tilePosition.x + 1, tilePosition.y + 1), Vector2(tilePosition.x, tilePosition.y + 1), Vector2(tilePosition.x - 1, tilePosition.y + 1), Vector2(tilePosition.x - 1, tilePosition.y), Vector2(tilePosition.x - 1, tilePosition.y - 1), Vector2(tilePosition.x, tilePosition.y - 1), Vector2(tilePosition.x + 1, tilePosition.y - 1)]
+
+	for tile in checkTiles:
+		yield(get_tree().create_timer(digSpeed), "timeout")
+		
+		if !treasureTiles.empty() && treasureTiles.has(tile):
+			island.set_cell(tile.x, tile.y, dugTreasureSandTile)
+			treasureFound()
+			break
+		elif !sandTiles.empty() && sandTiles.has(tile):
+			if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1):
+				island.set_cell(tile.x, tile.y, dugSandTile)
+	
+	player.dug()
 
 func _placeCoconut():
 	var coconutScene = load("res://Scenes/Coconut.tscn")
@@ -21,6 +87,22 @@ func _placeCoconut():
 	add_child(coconutInstance)
 	coconutInstance.set_global_position(player.get_global_position() + (Vector2.DOWN * coconutOffset))
 	coconutInstance.drop()
+	
+func spawnCoconut(spawnPosition):
+	var coconutScene = load("res://Scenes/Coconut.tscn")
+	var coconutInstance = coconutScene.instance()
+	
+	add_child(coconutInstance)
+	coconutInstance.set_global_position(spawnPosition)
+	coconutInstance.drop()
+	
+func spawnSnake(spawnPosition):
+	var snakeScene = load("res://Scenes/Snake.tscn")
+	var snakeInstance = snakeScene.instance()
+	
+	add_child(snakeInstance)
+	snakeInstance.set_global_position(spawnPosition)
+	snakeInstance.brain()
 
 func _bonkCoconut(snake):
 	
@@ -69,3 +151,9 @@ func _updateHealth(health):
 		heart1.texture = emptyHeart
 		heart2.texture = emptyHeart
 		heart3.texture = emptyHeart
+
+func treasureFound():
+	var tween = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(cam, "offset", player.get_global_position(), 1)
+	cam.get_node("Animator").play("zoom")

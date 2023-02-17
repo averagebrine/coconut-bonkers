@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "zoom"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( -2, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0.5, 0.5 ) ]
+}
+
+[node name="Camera" type="Camera2D"]
+offset = Vector2( 483.5, 272 )
+current = true
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+anims/zoom = SubResource( 1 )

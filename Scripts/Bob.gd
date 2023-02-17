@@ -4,6 +4,8 @@ onready var sprite : Sprite = get_node("Sprite")
 onready var animator : AnimationPlayer = get_node("Animator")
 onready var radius : Area2D = get_node("InteractionRadius")
 onready var emitter : CPUParticles2D = get_node("Particles")
+onready var digEmitter : CPUParticles2D = get_node("DigParticles")
+onready var shovelEmitter : CPUParticles2D = get_node("ShovelParticles")
 var health : int = 6
 var movementSpeed : float = 200
 var movementSmooth : float = 0.2
@@ -21,6 +23,7 @@ var movementIdle : bool = true
 signal updateHealth
 signal placeCoconut
 signal bonkCoconut
+signal dig
 
 func _process(_delta):
 	animate()
@@ -90,7 +93,6 @@ func animate():
 			animator.play("idle")
 
 func interact():
-	
 	if interacting:
 		return
 		
@@ -98,17 +100,26 @@ func interact():
 	
 	var nearby = radius.get_overlapping_areas()
 	var nearbyCoconuts = []
+	var nearbyShovels = []
 	var nearbySnakes = []
 	var nearestDist = 0
 	
-	# find nearby coconuts and snakes
+	# find nearby objects
 	if !nearby.empty():
 		for obj in nearby:
 			if obj.is_in_group("coconuts"):
 				nearbyCoconuts.append(obj)
+			elif obj.is_in_group("shovels"):
+				nearbyShovels.append(obj)
 			elif obj.is_in_group("snakes"):
 				nearbySnakes.append(obj.get_parent())
 	
+	# use shovel
+	if holdingShovel:
+		emit_signal("dig", position)
+		digEmitter.emitting = true
+		return
+
 	# drop coconut
 	if nearbySnakes.empty() && holdingCoconut:
 		
@@ -142,8 +153,27 @@ func interact():
 		interacting = false
 		return
 	
+	# pickup shovel
+	if !nearbyShovels.empty() && !holdingCoconut && !holdingShovel:
+		var nearestShovel = null
+		
+		# find the nearest shovel
+		for shovel in nearbyShovels:
+			var dist = position.distance_to(shovel.position)
+			if nearestShovel == null or dist < nearestDist:
+				nearestShovel = shovel
+				nearestDist = dist
+			
+		# make sure we didn't move away from the shovel since the last frame, to prevent a crash
+		if nearestShovel != null:
+			nearestShovel.queue_free()
+			holdingShovel = true
+		
+		interacting = false
+		return	
+
 	# pickup coconut
-	if !nearbyCoconuts.empty() && !holdingCoconut:
+	if !nearbyCoconuts.empty() && !holdingCoconut && !holdingShovel:
 		
 		var nearestCoconut = null
 		
@@ -163,6 +193,12 @@ func interact():
 		return
 	
 	interacting = false
+
+func dug():
+	holdingShovel = false
+	interacting = false
+	digEmitter.emitting = false
+	shovelEmitter.emitting = true
 
 func drop():
 	emit_signal("placeCoconut")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Tiles/Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Bob.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Scenes/Tree.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Snake.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Camera.tscn" type="PackedScene" id=9]
 
 [node name="Level" type="Node2D"]
 scale = Vector2( 4, 4 )
@@ -15,6 +16,9 @@ script = ExtResource( 4 )
 
 [node name="HUD" parent="." instance=ExtResource( 8 )]
 rect_scale = Vector2( 0.25, 0.25 )
+
+[node name="Camera" parent="." instance=ExtResource( 9 )]
+visible = false
 
 [node name="Decoration" type="TileMap" parent="."]
 position = Vector2( 0.5, 0 )
@@ -37,6 +41,12 @@ tile_data = PoolIntArray( -65536, 2, 65540, -65535, 2, 65540, -65534, 2, 65540, 
 [node name="Bob" parent="." instance=ExtResource( 2 )]
 position = Vector2( 122.5, 68.5 )
 
+[node name="Snake Nest" parent="." instance=ExtResource( 5 )]
+position = Vector2( 96, 64 )
+
+[node name="Tree" parent="." instance=ExtResource( 6 )]
+position = Vector2( 143.5, 24 )
+
 [node name="Snake" parent="." instance=ExtResource( 7 )]
 position = Vector2( 144, 88 )
 
@@ -48,9 +58,3 @@ position = Vector2( 176, 64 )
 
 [node name="Coconut2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 176, 72 )
-
-[node name="Tree" parent="." instance=ExtResource( 6 )]
-position = Vector2( 144, 24 )
-
-[node name="Tree2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 80, 64 )
