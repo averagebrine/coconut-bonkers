@@ -8,7 +8,7 @@ func complete():
 	get_tree().paused = true
 
 func _input(event):
-	if !visible: return
+	if !get_parent().visible: return
 	
 	if event.is_action_pressed("continue"):
 		animator.play("fade_out")
