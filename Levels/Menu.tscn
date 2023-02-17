@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Menu.gd" type="Script" id=1]
 [ext_resource path="res://cover.png" type="Texture" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Sprites/UI/button.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/UI/button_pressed.png" type="Texture" id=5]
 [ext_resource path="res://Fonts/MononokiBold.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Scenes/WipeIn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/WipeOut.tscn" type="PackedScene" id=8]
 
 [node name="Menu" type="Control"]
 anchor_right = 1.0
@@ -50,6 +52,7 @@ align = 1
 valign = 1
 
 [node name="Options" type="TextureButton" parent="List"]
+visible = false
 margin_left = 324.0
 margin_right = 644.0
 margin_bottom = 72.0
@@ -72,9 +75,9 @@ align = 1
 valign = 1
 
 [node name="Credits" type="TextureButton" parent="List"]
-margin_top = 76.0
-margin_right = 320.0
-margin_bottom = 148.0
+margin_left = 324.0
+margin_right = 644.0
+margin_bottom = 72.0
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
@@ -94,9 +97,8 @@ align = 1
 valign = 1
 
 [node name="Quit" type="TextureButton" parent="List"]
-margin_left = 324.0
 margin_top = 76.0
-margin_right = 644.0
+margin_right = 320.0
 margin_bottom = 148.0
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
@@ -115,6 +117,10 @@ custom_fonts/font = ExtResource( 6 )
 text = "QUIT"
 align = 1
 valign = 1
+
+[node name="WipeIn" parent="." instance=ExtResource( 7 )]
+
+[node name="WipeOut" parent="." instance=ExtResource( 8 )]
 
 [connection signal="pressed" from="List/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="List/Options" to="." method="_on_Options_pressed"]

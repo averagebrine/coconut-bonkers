@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Sprites/Characters/bob.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Bob.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Particles/SandDig.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Particles/SandRun.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Particles/ShovelBreak.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Particles/Celebrate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Particles/BobDeath.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 1.5
@@ -16,6 +18,23 @@ radius = 11.5
 
 [sub_resource type="CircleShape2D" id=13]
 radius = 6.0
+
+[sub_resource type="Animation" id=14]
+resource_name = "celebrate"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 42, 43, 44, 45, 46, 47 ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -156,6 +175,7 @@ collision_layer = 2
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 hframes = 6
 vframes = 8
@@ -199,9 +219,17 @@ position = Vector2( 0, 7 )
 z_index = 1
 
 [node name="ShovelParticles" parent="." instance=ExtResource( 6 )]
-position = Vector2( -2, 4 )
+position = Vector2( -3, 4 )
+
+[node name="CelebrationParticles" parent="." instance=ExtResource( 7 )]
+position = Vector2( 0, 7 )
+emitting = false
+
+[node name="DeathParticles" parent="." instance=ExtResource( 8 )]
+position = Vector2( 0, 4 )
 
 [node name="Animator" type="AnimationPlayer" parent="."]
+anims/celebrate = SubResource( 14 )
 anims/idle = SubResource( 2 )
 anims/idle_coconut = SubResource( 8 )
 anims/idle_shovel = SubResource( 11 )

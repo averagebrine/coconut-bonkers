@@ -6,6 +6,9 @@ onready var radius : Area2D = get_node("InteractionRadius")
 onready var emitter : CPUParticles2D = get_node("Particles")
 onready var digEmitter : CPUParticles2D = get_node("DigParticles")
 onready var shovelEmitter : CPUParticles2D = get_node("ShovelParticles")
+onready var celebrationEmitter : CPUParticles2D = get_node("CelebrationParticles")
+onready var deathEmitter : CPUParticles2D = get_node("DeathParticles")
+onready var cam = get_tree().root.get_node("Level/Camera")
 var health : int = 6
 var movementSpeed : float = 200
 var movementSmooth : float = 0.2
@@ -18,6 +21,7 @@ var holdingCoconut : bool = false
 var holdingShovel : bool = false
 var lobbing : bool = false
 var interacting : bool = false
+var celebrating : bool = false
 var movementIdle : bool = true
 
 signal updateHealth
@@ -87,6 +91,10 @@ func animate():
 		
 		if holdingCoconut:
 			animator.play("idle_coconut")
+		elif celebrating:
+			animator.play("celebrate")
+			if celebrationEmitter.emitting != true:
+				celebrationEmitter.emitting = true
 		elif holdingShovel:
 			animator.play("idle_shovel")
 		else:
@@ -168,6 +176,7 @@ func interact():
 		if nearestShovel != null:
 			nearestShovel.queue_free()
 			holdingShovel = true
+			get_tree().root.get_node("Level/UICanvas/HUD/Icons/Shovel").visible = true
 		
 		interacting = false
 		return	
@@ -219,8 +228,18 @@ func takeDamage():
 	emit_signal("updateHealth", health)
 	
 	if health == 0:
-		print("I'm fucking dead.")
+		death()
 
 func death():
 	# play a death animation, then start the game over screen
-	pass
+	get_tree().root.get_node("Level/UICanvas/HUD").visible = false
+	dead = true
+	sprite.visible = false
+	get_node("Shadow").visible = false
+	cam.get_node("Animator").play("zoom")
+	var tween = get_tree().create_tween()
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(cam, "offset", get_global_position(), 1)
+	deathEmitter.emitting = true
+	
+	get_tree().root.get_node("Level").gameOver()

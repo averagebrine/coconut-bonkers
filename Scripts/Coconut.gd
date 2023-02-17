@@ -44,6 +44,6 @@ func break():
 	
 	# destroy the coconut once it's finished with it's particles
 	while breakEmitter.emitting == true:
-		yield(get_tree().create_timer(1), "timeout")
+		yield(get_tree().create_timer(1, false), "timeout")
 	queue_free()
 		

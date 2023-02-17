@@ -1,2 +1,0 @@
-extends Navigation2D
-

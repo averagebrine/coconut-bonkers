@@ -10,11 +10,12 @@ var rng
 
 func _ready():
 	rng = RandomNumberGenerator.new()
+	rng.randomize()
 	
 	checkNearby()
 
 func checkNearby():
-	yield(get_tree().create_timer(waitTime), "timeout")
+	yield(get_tree().create_timer(waitTime, false), "timeout")
 	
 	# check if there are more than the legal limit of coconuts on the island
 	var totalCoconuts = []
@@ -33,7 +34,7 @@ func checkNearby():
 
 	# spawn some coconuts if there aren't too many
 	if nearbyCoconuts.size() == 0 && totalCoconuts.size() < maxTotalCoconuts:
-		if (rng.randi() % 3) == 0:
+		if (rng.randi() % 4) == 0:
 			game.spawnCoconut(socket.get_global_position())
 			game.spawnCoconut(socket2.get_global_position())
 		else:

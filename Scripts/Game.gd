@@ -8,19 +8,21 @@ onready var player = get_node("Bob")
 
 var coconutOffset : float = 48
 var shovelOffset : float = -48
-var digSpeed : float = 0.075
+var digSpeed : float = 0.05
 
 var sandTile = 0
 var dugSandTile = 4
 var treasureTile = 5
 var dugTreasureSandTile = 6
 
-onready var HUD = get_node("HUD")
+onready var HUD = get_node("UICanvas/HUD")
 onready var heart = load("res://Sprites/UI/heart.png")
 onready var halfHeart = load("res://Sprites/UI/half_heart.png")
 onready var emptyHeart = load("res://Sprites/UI/empty_heart.png")
 
 func _ready():
+	get_node("UICanvas/WipeOut/Animator").play("wipe_out")
+	
 	rng.randomize()
 	placeTreasure()
 	
@@ -68,7 +70,7 @@ func _dig(worldPosition):
 	var checkTiles = [Vector2(tilePosition.x, tilePosition.y), Vector2(tilePosition.x + 1, tilePosition.y), Vector2(tilePosition.x + 1, tilePosition.y + 1), Vector2(tilePosition.x, tilePosition.y + 1), Vector2(tilePosition.x - 1, tilePosition.y + 1), Vector2(tilePosition.x - 1, tilePosition.y), Vector2(tilePosition.x - 1, tilePosition.y - 1), Vector2(tilePosition.x, tilePosition.y - 1), Vector2(tilePosition.x + 1, tilePosition.y - 1)]
 
 	for tile in checkTiles:
-		yield(get_tree().create_timer(digSpeed), "timeout")
+		yield(get_tree().create_timer(digSpeed, false), "timeout")
 		
 		if !treasureTiles.empty() && treasureTiles.has(tile):
 			island.set_cell(tile.x, tile.y, dugTreasureSandTile)
@@ -78,6 +80,7 @@ func _dig(worldPosition):
 			if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1):
 				island.set_cell(tile.x, tile.y, dugSandTile)
 	
+	get_node("UICanvas/HUD/Icons/Shovel").visible = false
 	player.dug()
 
 func _placeCoconut():
@@ -101,7 +104,7 @@ func spawnSnake(spawnPosition):
 	var snakeInstance = snakeScene.instance()
 	
 	add_child(snakeInstance)
-	snakeInstance.set_global_position(spawnPosition)
+	snakeInstance.set_global_position(Vector2(spawnPosition.x, spawnPosition.y))
 	snakeInstance.brain()
 
 func _bonkCoconut(snake):
@@ -153,7 +156,31 @@ func _updateHealth(health):
 		heart3.texture = emptyHeart
 
 func treasureFound():
+	HUD.visible = false
+	
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(cam, "offset", player.get_global_position(), 1)
 	cam.get_node("Animator").play("zoom")
+	
+	player.health = 999
+	player.celebrating = true
+	
+	for child in get_children():
+		if child.is_in_group("snakes"):
+			child.state = child.DEATH
+		elif child.is_in_group("snake_nests"):
+			child.enabled = false
+		
+	yield(get_tree().create_timer(5), "timeout")
+	get_node("UICanvas/WipeIn/Animator").play("wipe_in")
+	yield(get_tree().create_timer(1.5), "timeout")
+	get_node("LevelCompleteCanvas").visible = true
+	get_node("LevelCompleteCanvas/LevelComplete").complete()
+
+func gameOver():
+	yield(get_tree().create_timer(5), "timeout")
+	get_node("UICanvas/WipeIn/Animator").play("wipe_in")
+	yield(get_tree().create_timer(1.5), "timeout")
+	get_node("GameOverCanvas").visible = true
+	get_node("GameOverCanvas/GameOver").over()

@@ -1,0 +1,98 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://back.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/LevelSelect.gd" type="Script" id=2]
+[ext_resource path="res://Sprites/UI/Levels/level_8.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/UI/Levels/level_1.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/UI/Levels/level_2.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/UI/Levels/level_3.png" type="Texture" id=6]
+[ext_resource path="res://Scenes/WipeIn.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/WipeOut.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sprites/UI/Levels/level_5.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/UI/Levels/level_4.png" type="Texture" id=10]
+[ext_resource path="res://Sprites/UI/Levels/level_6.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/UI/Levels/level_7.png" type="Texture" id=12]
+
+[node name="LevelSelect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 967.0
+margin_bottom = 545.0
+texture = ExtResource( 1 )
+
+[node name="Levels" type="GridContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -390.0
+margin_top = -225.0
+margin_right = 390.0
+margin_bottom = 163.0
+columns = 4
+
+[node name="Level1" type="TextureButton" parent="Levels"]
+margin_right = 192.0
+margin_bottom = 192.0
+texture_normal = ExtResource( 4 )
+
+[node name="Level2" type="TextureButton" parent="Levels"]
+margin_left = 196.0
+margin_right = 388.0
+margin_bottom = 192.0
+texture_normal = ExtResource( 5 )
+
+[node name="Level3" type="TextureButton" parent="Levels"]
+margin_left = 392.0
+margin_right = 584.0
+margin_bottom = 192.0
+texture_normal = ExtResource( 6 )
+
+[node name="Level4" type="TextureButton" parent="Levels"]
+margin_left = 588.0
+margin_right = 780.0
+margin_bottom = 192.0
+texture_normal = ExtResource( 10 )
+
+[node name="Level5" type="TextureButton" parent="Levels"]
+margin_top = 196.0
+margin_right = 192.0
+margin_bottom = 388.0
+texture_normal = ExtResource( 9 )
+
+[node name="Level6" type="TextureButton" parent="Levels"]
+margin_left = 196.0
+margin_top = 196.0
+margin_right = 388.0
+margin_bottom = 388.0
+texture_normal = ExtResource( 11 )
+
+[node name="Level7" type="TextureButton" parent="Levels"]
+margin_left = 392.0
+margin_top = 196.0
+margin_right = 584.0
+margin_bottom = 388.0
+texture_normal = ExtResource( 12 )
+
+[node name="Level8" type="TextureButton" parent="Levels"]
+margin_left = 588.0
+margin_top = 196.0
+margin_right = 780.0
+margin_bottom = 388.0
+texture_normal = ExtResource( 3 )
+
+[node name="WipeIn" parent="." instance=ExtResource( 7 )]
+
+[node name="WipeOut" parent="." instance=ExtResource( 8 )]
+
+[connection signal="pressed" from="Levels/Level1" to="." method="_on_Level1_pressed"]
+[connection signal="pressed" from="Levels/Level2" to="." method="_on_Level2_pressed"]
+[connection signal="pressed" from="Levels/Level3" to="." method="_on_Level3_pressed"]
+[connection signal="pressed" from="Levels/Level4" to="." method="_on_Level4_pressed"]
+[connection signal="pressed" from="Levels/Level5" to="." method="_on_Level5_pressed"]
+[connection signal="pressed" from="Levels/Level6" to="." method="_on_Level6_pressed"]
+[connection signal="pressed" from="Levels/Level7" to="." method="_on_Level7_pressed"]
+[connection signal="pressed" from="Levels/Level8" to="." method="_on_Level8_pressed"]

@@ -17,7 +17,7 @@ var movementSmooth : float = 0.2
 
 var brainCapacity : float = 1 # how often the snake thinks, in seconds
 var attackRange : float = 12
-var detectionRange : float = 69
+var detectionRange : float = 69 * 1.35
 
 var velocity : Vector2 = Vector2()
 var targetVelocity : Vector2 = Vector2()
@@ -28,9 +28,9 @@ var state = IDLE
 
 func _ready():
 	state = IDLE
-	brainCapacity = rand_range(0.1, 3)
+	brainCapacity = rand_range(1, 3)
 	
-	yield(get_tree().create_timer(brainCapacity), "timeout")
+	yield(get_tree().create_timer(3), "timeout")
 	brain()
 
 func _process(delta):
@@ -68,6 +68,8 @@ func move(target, delta):
 	velocity += steering
 
 func animate():
+	if isDead: return
+
 	if velocity.x > 1:
 		sprite.flip_h = false
 		emitter.position = Vector2(5, emitter.position.y)
@@ -82,12 +84,10 @@ func animate():
 			animator.play("idle")
 
 func brain():
-	if isDead:
-		return
+	if isDead: return
 
 	var space_state = get_world_2d().direct_space_state
 	var los = space_state.intersect_ray(get_global_position(), player.get_global_position(), [self, player], collision_mask)
-
 	if los.empty() && position.distance_to(player.position) <= detectionRange:
 		# go get 'em tiger
 		state = CHASE
@@ -95,7 +95,7 @@ func brain():
 		state = IDLE
 		velocity = Vector2.ZERO
 
-	yield(get_tree().create_timer(brainCapacity), "timeout")
+	yield(get_tree().create_timer(brainCapacity, false), "timeout")
 	brain()
 
 func die():
@@ -104,14 +104,18 @@ func die():
 	animator.play("death")
 	z_index = z_index - 5
 
-	yield(get_tree().create_timer(lingerTime), "timeout")
+	yield(get_tree().create_timer(lingerTime, false), "timeout")
 	animator.play("fade")
 
 func tryBite():
+	if isDead: return
+	
 	if position.distance_to(player.position) <= attackRange:
 		animator.play("chomp")
 
 func bite():
+	if isDead: return
+
 	var nearby = radius.get_overlapping_areas()
 	for obj in nearby:
 		if obj.is_in_group("players"):
