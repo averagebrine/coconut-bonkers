@@ -11,7 +11,7 @@ func doSound():
 	var clip = oceanClips[randi() % oceanClips.size()]
 	var pitch = rand_range(0.75, 1.25)
 	audioPlayer.stream = load(clip)
-	audioPlayer.volume_db = -0.5
+	audioPlayer.volume_db = -10
 	audioPlayer.pitch_scale = pitch
 	audioPlayer.stop()
 	audioPlayer.play()

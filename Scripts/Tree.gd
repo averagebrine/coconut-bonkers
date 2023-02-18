@@ -5,7 +5,7 @@ onready var radius : Area2D = get_node("Radius")
 onready var socket = get_node("CoconutSocket")
 onready var socket2 = get_node("CoconutSocket2")
 var maxTotalCoconuts : int = 3
-var waitTime : float = 5
+var waitTime : float = 2
 var rng
 
 func _ready():
@@ -36,11 +36,11 @@ func checkNearby():
 	# spawn some coconuts if there aren't too many
 	if nearbyCoconuts.size() == 0 && totalCoconuts.size() < maxTotalCoconuts:
 		rng.randomize()
-		if (rng.randi() % 3) == 0:
+		if rng.randf() <= 0.3:
 			game.spawnCoconut(socket.get_global_position())
 			game.spawnCoconut(socket2.get_global_position())
 		else:
-			if rng.randi() % 2 == 0:
+			if rng.randf() <= 0.5:
 				game.spawnCoconut(socket.get_global_position())
 			else:
 				game.spawnCoconut(socket2.get_global_position())

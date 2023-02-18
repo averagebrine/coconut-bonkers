@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/hiss_2.mp3-e3090870aff6fe9a2f2ae4fae0d04679.mp3str"
+
+[deps]
+
+source_file="res://Audio/Snake/hiss_2.mp3"
+dest_files=[ "res://.import/hiss_2.mp3-e3090870aff6fe9a2f2ae4fae0d04679.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

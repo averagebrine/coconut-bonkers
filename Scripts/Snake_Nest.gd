@@ -3,12 +3,11 @@ extends Sprite
 onready var game = get_tree().root.get_node("Level")
 onready var radius : Area2D = get_node("Radius")
 onready var emitter : CPUParticles2D = get_node("Particles")
-var maxTotalSnakes : int = 5
-var waitTime : float = 4.5
+var maxTotalSnakes : int = 8
+var waitTime : float = 2
 var enabled = true
 
 func _ready():
-	
 	checkNearby()
 
 func checkNearby():
@@ -33,7 +32,7 @@ func checkNearby():
 			nearbySnakes.append(obj)
 
 	# spawn some snakes if there aren't too many
-	if nearbySnakes.size() <= 1 && totalSnakes.size() < maxTotalSnakes:
+	if nearbySnakes.size() <= 3 && totalSnakes.size() < maxTotalSnakes:
 		game.spawnSnake(get_global_position())
 		emitter.emitting = true
 		

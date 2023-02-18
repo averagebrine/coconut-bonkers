@@ -28,6 +28,12 @@ var state = IDLE
 
 func _ready():
 	randomize()
+	if randf() <= 0.5:
+		sprite.flip_h = true
+	else:
+		sprite.flip_h = false		
+
+	randomize()
 	state = IDLE
 	brainCapacity = rand_range(1, 3)
 	
@@ -98,7 +104,7 @@ func brain():
 
 	yield(get_tree().create_timer(brainCapacity, false), "timeout")
 	brain()
-
+	
 func die():
 	isDead = true
 

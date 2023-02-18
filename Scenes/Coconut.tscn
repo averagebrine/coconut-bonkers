@@ -123,3 +123,4 @@ anims/drop_bounce = SubResource( 3 )
 
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+volume_db = -4.0

@@ -1,7 +1,5 @@
 extends Node2D
 
-var rng = RandomNumberGenerator.new()
-
 onready var cam = get_node("Camera")
 onready var island = get_node("Island")
 onready var player = get_node("Bob")
@@ -16,17 +14,17 @@ var dugSandTile = 4
 var treasureTile = 5
 var dugTreasureSandTile = 6
 
+
 onready var HUD = get_node("UICanvas/HUD")
 onready var heart = load("res://Sprites/UI/heart.png")
 onready var halfHeart = load("res://Sprites/UI/half_heart.png")
 onready var emptyHeart = load("res://Sprites/UI/empty_heart.png")
 
 func _ready():
-	audioPlayer.ocean()
+	get_node("OceanAmbience/Ocean").ocean()
 	
 	get_node("UICanvas/WipeOut/Animator").play("wipe_out")
-	
-	rng.randomize()
+
 	placeTreasure()
 	
 	player.connect("placeCoconut", self, "_placeCoconut")
@@ -35,6 +33,7 @@ func _ready():
 	player.connect("dig", self, "_dig")
 
 func placeTreasure():
+	randomize()
 	# get all tiles
 	var tiles = island.get_used_cells_by_id(sandTile)
 	var sandTiles = []
@@ -46,7 +45,7 @@ func placeTreasure():
 			sandTiles.append(tile)
 
 	# randomize treasure location on one of the sand tiles
-	var tonightsBiggestLoser = sandTiles[rng.randi() % sandTiles.size()]
+	var tonightsBiggestLoser = sandTiles[randi() % sandTiles.size()]
 	island.set_cell(tonightsBiggestLoser.x, tonightsBiggestLoser.y, treasureTile)
 
 func dropShovel(shovelPosition):
@@ -179,6 +178,9 @@ func treasureFound():
 		elif child.is_in_group("snake_nests"):
 			child.enabled = false
 		
+	yield(get_tree().create_timer(0.25), "timeout")
+	player.get_node("Win").play()
+	
 	yield(get_tree().create_timer(5), "timeout")
 	get_node("UICanvas/WipeIn/Animator").play("wipe_in")
 	yield(get_tree().create_timer(1.5), "timeout")

@@ -10,6 +10,8 @@ onready var celebrationEmitter : CPUParticles2D = get_node("CelebrationParticles
 onready var deathEmitter : CPUParticles2D = get_node("DeathParticles")
 onready var cam = get_tree().root.get_node("Level/Camera")
 
+onready var hurtPlayer = get_node("Hurt")
+onready var deathPlayer = get_node("Death")
 onready var footstepsPlayer = get_node("Footsteps")
 var footstepSounds = ["res://Audio/Footsteps/footsteps_1.wav", "res://Audio/Footsteps/footsteps_2.wav", "res://Audio/Footsteps/footsteps_3.wav", "res://Audio/Footsteps/footsteps_4.wav", "res://Audio/Footsteps/footsteps_5.wav", "res://Audio/Footsteps/footsteps_6.wav"] # surely there is some better way to do this
 
@@ -245,6 +247,8 @@ func takeDamage():
 	
 	health = health -1
 	
+	hurtPlayer.play()
+	
 	emit_signal("updateHealth", health)
 	
 	if health == 0:
@@ -255,6 +259,7 @@ func death():
 	get_tree().root.get_node("Level/UICanvas/HUD").visible = false
 	dead = true
 	sprite.visible = false
+	deathPlayer.play()
 	get_node("Shadow").visible = false
 	cam.get_node("Animator").play("zoom")
 	emitter.emitting = false

@@ -115,8 +115,10 @@ align = 1
 valign = 1
 
 [node name="WipeIn" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [node name="WipeOut" parent="." instance=ExtResource( 8 )]
+visible = false
 
 [connection signal="pressed" from="List/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="List/Controls" to="." method="_on_Controls_pressed"]

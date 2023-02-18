@@ -2,7 +2,6 @@ extends Control
 
 onready var wipeIn = get_node("WipeIn/Animator")
 onready var wipeOut = get_node("WipeOut/Animator")
-var focused : bool = false
 
 func _ready():
 	wipeOut.play("wipe_out")

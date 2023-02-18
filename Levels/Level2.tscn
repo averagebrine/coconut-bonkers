@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Tiles/Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Bob.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Levels/GameOver.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Levels/LevelComplete.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Scenes/AudioPlayer.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scenes/OceanAmbience.tscn" type="PackedScene" id=16]
 
 [node name="Level" type="Node2D"]
 scale = Vector2( 4, 4 )
@@ -27,8 +28,10 @@ layer = 50
 [node name="HUD" parent="UICanvas" instance=ExtResource( 8 )]
 
 [node name="WipeIn" parent="UICanvas" instance=ExtResource( 12 )]
+visible = false
 
 [node name="WipeOut" parent="UICanvas" instance=ExtResource( 10 )]
+visible = false
 
 [node name="PauseCanvas" parent="." instance=ExtResource( 11 )]
 layer = 75
@@ -41,6 +44,8 @@ visible = false
 visible = false
 
 [node name="AudioPlayer" parent="." instance=ExtResource( 15 )]
+
+[node name="OceanAmbience" parent="." instance=ExtResource( 16 )]
 
 [node name="Camera" parent="." instance=ExtResource( 9 )]
 editor_draw_screen = false

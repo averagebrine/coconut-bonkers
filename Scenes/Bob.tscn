@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://Sprites/Characters/bob.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Bob.gd" type="Script" id=2]
@@ -9,6 +9,9 @@
 [ext_resource path="res://Particles/Celebrate.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Particles/BobDeath.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Audio/Footsteps/footsteps_1.wav" type="AudioStream" id=9]
+[ext_resource path="res://Audio/Hurt/death.wav" type="AudioStream" id=10]
+[ext_resource path="res://Audio/Hurt/hit.wav" type="AudioStream" id=11]
+[ext_resource path="res://Audio/Dig/win.wav" type="AudioStream" id=12]
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 1.5
@@ -169,6 +172,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 18, 19, 20, 21, 22, 23 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "footsteps"
+}, {
+"args": [  ],
+"method": "footsteps"
+} ]
+}
 
 [sub_resource type="Animation" id=12]
 resource_name = "run_shovel"
@@ -185,6 +205,23 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 36, 37, 38, 39, 40, 41 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "footsteps"
+}, {
+"args": [  ],
+"method": "footsteps"
+} ]
 }
 
 [node name="Bob" type="KinematicBody2D" groups=["players"]]
@@ -258,3 +295,15 @@ anims/run_shovel = SubResource( 12 )
 
 [node name="Footsteps" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -7.0
+
+[node name="Death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -4.0
+
+[node name="Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -8.0
