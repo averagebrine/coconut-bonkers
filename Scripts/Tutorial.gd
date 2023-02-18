@@ -3,6 +3,7 @@ extends CanvasLayer
 func _ready():
 	get_tree().paused = true
 	get_tree().root.get_node("Level/PauseCanvas/Pause").isTutorial = true
+	get_tree().root.get_node("Level/UICanvas/HUD").visible = false
 	
 
 func _input(event):
@@ -11,4 +12,5 @@ func _input(event):
 		yield(get_tree().create_timer(0.25), "timeout")
 		get_tree().paused = false
 		get_tree().root.get_node("Level/PauseCanvas/Pause").isTutorial = false
+		get_tree().root.get_node("Level/UICanvas/HUD").visible = true
 		queue_free()

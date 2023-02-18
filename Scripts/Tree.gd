@@ -36,7 +36,7 @@ func checkNearby():
 	# spawn some coconuts if there aren't too many
 	if nearbyCoconuts.size() == 0 && totalCoconuts.size() < maxTotalCoconuts:
 		rng.randomize()
-		if (rng.randi() % 4) == 0:
+		if (rng.randi() % 3) == 0:
 			game.spawnCoconut(socket.get_global_position())
 			game.spawnCoconut(socket2.get_global_position())
 		else:

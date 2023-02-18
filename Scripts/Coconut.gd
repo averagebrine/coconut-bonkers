@@ -43,7 +43,7 @@ func break():
 	
 	# spawn a shovel
 	randomize()
-	if randi() % 5 <= 2:
+	if randi() % 5 <= 2 || get_tree().current_scene.filename == "res://Levels/Level1.tscn":
 		game.dropShovel(get_global_position())
 	
 	# destroy the coconut once it's finished with it's particles

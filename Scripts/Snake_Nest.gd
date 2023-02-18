@@ -33,7 +33,7 @@ func checkNearby():
 			nearbySnakes.append(obj)
 
 	# spawn some snakes if there aren't too many
-	if nearbySnakes.size() == 0 && totalSnakes.size() < maxTotalSnakes:
+	if nearbySnakes.size() <= 1 && totalSnakes.size() < maxTotalSnakes:
 		game.spawnSnake(get_global_position())
 		emitter.emitting = true
 		

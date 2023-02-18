@@ -41,14 +41,14 @@ func _on_Level5_pressed():
 func _on_Level6_pressed():
 	wipeIn.play("wipe_in")
 	yield(get_tree().create_timer(1.5), "timeout")
-	var _dontErrorMe = get_tree().change_scene("res://Levels/Sandbox.tscn")
+	var _dontErrorMe = get_tree().change_scene("res://Levels/Level6.tscn")
 
 func _on_Level7_pressed():
 	wipeIn.play("wipe_in")
 	yield(get_tree().create_timer(1.5), "timeout")
-	var _dontErrorMe = get_tree().change_scene("res://Levels/Sandbox.tscn")
+	var _dontErrorMe = get_tree().change_scene("res://Levels/Level7.tscn")
 
 func _on_Level8_pressed():
 	wipeIn.play("wipe_in")
 	yield(get_tree().create_timer(1.5), "timeout")
-	var _dontErrorMe = get_tree().change_scene("res://Levels/Sandbox.tscn")
+	var _dontErrorMe = get_tree().change_scene("res://Levels/Level8.tscn")
