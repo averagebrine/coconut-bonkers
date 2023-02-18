@@ -9,6 +9,10 @@ onready var shovelEmitter : CPUParticles2D = get_node("ShovelParticles")
 onready var celebrationEmitter : CPUParticles2D = get_node("CelebrationParticles")
 onready var deathEmitter : CPUParticles2D = get_node("DeathParticles")
 onready var cam = get_tree().root.get_node("Level/Camera")
+
+onready var footstepsPlayer = get_node("Footsteps")
+var footstepSounds = ["res://Audio/Footsteps/footsteps_1.wav", "res://Audio/Footsteps/footsteps_2.wav", "res://Audio/Footsteps/footsteps_3.wav", "res://Audio/Footsteps/footsteps_4.wav", "res://Audio/Footsteps/footsteps_5.wav", "res://Audio/Footsteps/footsteps_6.wav"] # surely there is some better way to do this
+
 var health : int = 6
 var movementSpeed : float = 200
 var movementSmooth : float = 0.2
@@ -30,15 +34,16 @@ signal bonkCoconut
 signal dig
 
 func _process(_delta):
-	animate()
-	
 	if Input.is_action_just_pressed("interact"):
 		interact()
+		
+	animate()
 
 func _physics_process(_delta):
 	move()
 
 func move():
+	if dead: return
 	
 	# make it SMOOTH
 	velocity = move_and_slide(lerp(velocity, targetVelocity * movementSpeed, movementSmooth), Vector2.UP)
@@ -73,22 +78,24 @@ func move():
 		targetVelocity = targetVelocity.normalized()
 
 func animate():
-	
+	if dead: return
+
 	if lobbing:
 		animator.play("lob")
 		emitter.emitting = false
 	elif abs(velocity.x) > 100 || abs(velocity.y) > 100:
 		emitter.emitting = true
-		
+
 		if holdingCoconut:
 			animator.play("run_coconut")
 		elif holdingShovel:
 			animator.play("run_shovel")
 		else:
 			animator.play("run")
+
 	else:
 		emitter.emitting = false
-		
+
 		if holdingCoconut:
 			animator.play("idle_coconut")
 		elif celebrating:
@@ -100,7 +107,18 @@ func animate():
 		else:
 			animator.play("idle")
 
+func footsteps():
+	randomize()
+	var clip = footstepSounds[randi() % footstepSounds.size()]
+	var pitch = rand_range(0.75, 1.25)
+	footstepsPlayer.stream = load(clip)
+	footstepsPlayer.pitch_scale = pitch
+	footstepsPlayer.stop()
+	footstepsPlayer.play()
+	
 func interact():
+	if dead: return
+	
 	if interacting:
 		return
 		
@@ -223,6 +241,8 @@ func finishedLobbing():
 	lobbing = false
 
 func takeDamage():
+	if dead: return
+	
 	health = health -1
 	
 	emit_signal("updateHealth", health)
@@ -237,6 +257,7 @@ func death():
 	sprite.visible = false
 	get_node("Shadow").visible = false
 	cam.get_node("Animator").play("zoom")
+	emitter.emitting = false
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)
 	tween.tween_property(cam, "offset", get_global_position(), 1)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Tiles/Tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://Scenes/Bob.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Scenes/WipeIn.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Levels/GameOver.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Levels/LevelComplete.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Scenes/AudioPlayer.tscn" type="PackedScene" id=15]
 
 [node name="Level" type="Node2D"]
 scale = Vector2( 4, 4 )
@@ -38,6 +39,8 @@ visible = false
 
 [node name="GameOverCanvas" parent="." instance=ExtResource( 13 )]
 visible = false
+
+[node name="AudioPlayer" parent="." instance=ExtResource( 15 )]
 
 [node name="Camera" parent="." instance=ExtResource( 9 )]
 editor_draw_screen = false

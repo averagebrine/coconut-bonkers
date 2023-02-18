@@ -102,6 +102,7 @@ hframes = 4
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.25098 )
+position = Vector2( 0, 0.5 )
 z_index = -1
 texture = ExtResource( 2 )
 

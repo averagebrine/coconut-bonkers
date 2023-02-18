@@ -9,7 +9,7 @@ onready var breakEmitter : CPUParticles2D = get_node("BreakParticles")
 onready var audioPlayer : AudioStreamPlayer = get_node("AudioPlayer")
 
 var target = null
-	
+
 func drop():
 	animator.play("drop")
 	z_index = 110
@@ -26,6 +26,8 @@ func doParticles():
 	if animator.current_animation == "drop_bounce":
 		return
 	z_index = 50
+		
+	get_tree().root.get_node("Level/AudioPlayer/Main").place()
 
 func killSnake():
 	if target != null:
@@ -40,7 +42,9 @@ func break():
 	monitorable = false
 	
 	# spawn a shovel
-	game.dropShovel(get_global_position())
+	randomize()
+	if randi() % 5 <= 2:
+		game.dropShovel(get_global_position())
 	
 	# destroy the coconut once it's finished with it's particles
 	while breakEmitter.emitting == true:

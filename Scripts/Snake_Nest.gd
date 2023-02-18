@@ -4,17 +4,16 @@ onready var game = get_tree().root.get_node("Level")
 onready var radius : Area2D = get_node("Radius")
 onready var emitter : CPUParticles2D = get_node("Particles")
 var maxTotalSnakes : int = 5
-var waitTime : float = 1
-var rng
+var waitTime : float = 4.5
 var enabled = true
 
 func _ready():
-	rng = RandomNumberGenerator.new()
 	
 	checkNearby()
 
 func checkNearby():
-	yield(get_tree().create_timer(waitTime, false), "timeout")
+	randomize()
+	yield(get_tree().create_timer(rand_range(waitTime - 1, waitTime + 1), false), "timeout")
 	
 	if !enabled: return
 	

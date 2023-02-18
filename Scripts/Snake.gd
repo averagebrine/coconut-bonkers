@@ -27,6 +27,7 @@ enum { IDLE, CHASE, ATTACK, DEATH }
 var state = IDLE
 
 func _ready():
+	randomize()
 	state = IDLE
 	brainCapacity = rand_range(1, 3)
 	

@@ -5,6 +5,7 @@ var rng = RandomNumberGenerator.new()
 onready var cam = get_node("Camera")
 onready var island = get_node("Island")
 onready var player = get_node("Bob")
+onready var audioPlayer = get_node("AudioPlayer/Main")
 
 var coconutOffset : float = 48
 var shovelOffset : float = -48
@@ -21,6 +22,8 @@ onready var halfHeart = load("res://Sprites/UI/half_heart.png")
 onready var emptyHeart = load("res://Sprites/UI/empty_heart.png")
 
 func _ready():
+	audioPlayer.ocean()
+	
 	get_node("UICanvas/WipeOut/Animator").play("wipe_out")
 	
 	rng.randomize()
@@ -39,7 +42,7 @@ func placeTreasure():
 	# iterate through all tiles, check autotile coords
 	for tile in tiles:
 		# check if it's a base sand tile!!!
-		if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1):
+		if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1) || island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(5, 7):
 			sandTiles.append(tile)
 
 	# randomize treasure location on one of the sand tiles
@@ -77,8 +80,10 @@ func _dig(worldPosition):
 			treasureFound()
 			break
 		elif !sandTiles.empty() && sandTiles.has(tile):
-			if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1):
+			if island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(1, 1) || island.get_cell_autotile_coord(tile.x, tile.y) == Vector2(5, 7):
 				island.set_cell(tile.x, tile.y, dugSandTile)
+		
+		audioPlayer.dig()
 	
 	get_node("UICanvas/HUD/Icons/Shovel").visible = false
 	player.dug()
@@ -157,6 +162,8 @@ func _updateHealth(health):
 
 func treasureFound():
 	HUD.visible = false
+	
+	audioPlayer.treasureDug()
 	
 	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_IN_OUT)

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/brine.mp3-fb6c278f3377cff2c003c715bff41b95.mp3str"
+
+[deps]
+
+source_file="res://Audio/Music/brine.mp3"
+dest_files=[ "res://.import/brine.mp3-fb6c278f3377cff2c003c715bff41b95.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

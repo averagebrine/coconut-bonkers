@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Sprites/Characters/bob.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Bob.gd" type="Script" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Particles/ShovelBreak.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Particles/Celebrate.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Particles/BobDeath.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Audio/Footsteps/footsteps_1.wav" type="AudioStream" id=9]
 
 [sub_resource type="CapsuleShape2D" id=10]
 radius = 1.5
@@ -134,6 +135,23 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 6, 7, 8, 9, 10, 11 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "footsteps"
+}, {
+"args": [  ],
+"method": "footsteps"
+} ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "run_coconut"
@@ -182,7 +200,7 @@ vframes = 8
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 1, 1, 1, 0.25098 )
-position = Vector2( 0, 5 )
+position = Vector2( 0.5, 5.5 )
 z_index = -1
 texture = ExtResource( 3 )
 
@@ -237,3 +255,6 @@ anims/lob = SubResource( 9 )
 anims/run = SubResource( 3 )
 anims/run_coconut = SubResource( 6 )
 anims/run_shovel = SubResource( 12 )
+
+[node name="Footsteps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )

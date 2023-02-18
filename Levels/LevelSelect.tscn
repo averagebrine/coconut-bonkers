@@ -1,17 +1,13 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://back.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/LevelSelect.gd" type="Script" id=2]
-[ext_resource path="res://Sprites/UI/Levels/level_8.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/UI/Levels/level_1.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/UI/Levels/level_2.png" type="Texture" id=5]
-[ext_resource path="res://Sprites/UI/Levels/level_3.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/MononokiBold.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Sprites/UI/panel.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/UI/panel_highlighted.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/UI/panel_pressed.png" type="Texture" id=6]
 [ext_resource path="res://Scenes/WipeIn.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/WipeOut.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Sprites/UI/Levels/level_5.png" type="Texture" id=9]
-[ext_resource path="res://Sprites/UI/Levels/level_4.png" type="Texture" id=10]
-[ext_resource path="res://Sprites/UI/Levels/level_6.png" type="Texture" id=11]
-[ext_resource path="res://Sprites/UI/Levels/level_7.png" type="Texture" id=12]
 
 [node name="LevelSelect" type="Control"]
 anchor_right = 1.0
@@ -38,55 +34,193 @@ columns = 4
 margin_right = 192.0
 margin_bottom = 192.0
 texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level1"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 1"
+align = 1
+valign = 1
 
 [node name="Level2" type="TextureButton" parent="Levels"]
 margin_left = 196.0
 margin_right = 388.0
 margin_bottom = 192.0
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 2"
+align = 1
+valign = 1
 
 [node name="Level3" type="TextureButton" parent="Levels"]
 margin_left = 392.0
 margin_right = 584.0
 margin_bottom = 192.0
-texture_normal = ExtResource( 6 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 3"
+align = 1
+valign = 1
 
 [node name="Level4" type="TextureButton" parent="Levels"]
 margin_left = 588.0
 margin_right = 780.0
 margin_bottom = 192.0
-texture_normal = ExtResource( 10 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level4"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 4"
+align = 1
+valign = 1
 
 [node name="Level5" type="TextureButton" parent="Levels"]
 margin_top = 196.0
 margin_right = 192.0
 margin_bottom = 388.0
-texture_normal = ExtResource( 9 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level5"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 5"
+align = 1
+valign = 1
 
 [node name="Level6" type="TextureButton" parent="Levels"]
 margin_left = 196.0
 margin_top = 196.0
 margin_right = 388.0
 margin_bottom = 388.0
-texture_normal = ExtResource( 11 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level6"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 6"
+align = 1
+valign = 1
 
 [node name="Level7" type="TextureButton" parent="Levels"]
 margin_left = 392.0
 margin_top = 196.0
 margin_right = 584.0
 margin_bottom = 388.0
-texture_normal = ExtResource( 12 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level7"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 7"
+align = 1
+valign = 1
 
 [node name="Level8" type="TextureButton" parent="Levels"]
 margin_left = 588.0
 margin_top = 196.0
 margin_right = 780.0
 margin_bottom = 388.0
-texture_normal = ExtResource( 3 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 6 )
+texture_hover = ExtResource( 5 )
+texture_focused = ExtResource( 6 )
+
+[node name="Label" type="Label" parent="Levels/Level8"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -74.0
+margin_top = -18.5
+margin_right = 74.0
+margin_bottom = 18.5
+custom_fonts/font = ExtResource( 3 )
+text = "LEVEL 8"
+align = 1
+valign = 1
 
 [node name="WipeIn" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [node name="WipeOut" parent="." instance=ExtResource( 8 )]
+visible = false
 
 [connection signal="pressed" from="Levels/Level1" to="." method="_on_Level1_pressed"]
 [connection signal="pressed" from="Levels/Level2" to="." method="_on_Level2_pressed"]
