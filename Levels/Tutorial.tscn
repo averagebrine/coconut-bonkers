@@ -39,9 +39,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -441.0
+margin_left = -450.0
 margin_top = -258.5
-margin_right = 441.0
+margin_right = 450.0
 margin_bottom = 258.5
 custom_fonts/font = ExtResource( 1 )
 text = "WELCOME TO COCONUT BONKERS!
@@ -52,7 +52,7 @@ FOR TREASURE, BUT WATCH OUT FOR SNAKES!
 IF YOU PICK UP A COCONUT, YOU CAN DROP IT
 ON A SNAKE TO DEFEAT IT.
 
-THE COCONUT WILL BREAK, AND IT MIGHT DROP A SPADE
+THE COCONUT WILL BREAK, AND IT MIGHT DROP A SHOCEL
 WHICH YOU CAN USE TO DIG FOR GOLD!
 (KEEP IN MIND TREASURE WON'T SPAWN ON EDGE TILES)
 

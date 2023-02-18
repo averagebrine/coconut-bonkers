@@ -36,8 +36,6 @@ margin_bottom = 72.0
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
-texture_disabled = ExtResource( 5 )
-texture_focused = ExtResource( 3 )
 
 [node name="Text" type="Label" parent="List/Play"]
 anchor_right = 1.0
@@ -46,43 +44,40 @@ margin_left = 1.0
 margin_top = 4.0
 margin_right = 1.0
 margin_bottom = -12.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
 text = "PLAY"
 align = 1
 valign = 1
 
-[node name="Options" type="TextureButton" parent="List"]
-visible = false
+[node name="Controls" type="TextureButton" parent="List"]
 margin_left = 324.0
 margin_right = 644.0
 margin_bottom = 72.0
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
-texture_disabled = ExtResource( 5 )
-texture_focused = ExtResource( 3 )
 
-[node name="Text" type="Label" parent="List/Options"]
+[node name="Text" type="Label" parent="List/Controls"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
 margin_top = 4.0
 margin_right = 1.0
 margin_bottom = -12.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
-text = "OPTIONS"
+text = "CONTROLS"
 align = 1
 valign = 1
 
 [node name="Credits" type="TextureButton" parent="List"]
-margin_left = 324.0
-margin_right = 644.0
-margin_bottom = 72.0
+margin_top = 76.0
+margin_right = 320.0
+margin_bottom = 148.0
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
-texture_disabled = ExtResource( 5 )
-texture_focused = ExtResource( 3 )
 
 [node name="Text" type="Label" parent="List/Credits"]
 anchor_right = 1.0
@@ -91,20 +86,20 @@ margin_left = 1.0
 margin_top = 4.0
 margin_right = 1.0
 margin_bottom = -12.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
 text = "CREDITS"
 align = 1
 valign = 1
 
 [node name="Quit" type="TextureButton" parent="List"]
+margin_left = 324.0
 margin_top = 76.0
-margin_right = 320.0
+margin_right = 644.0
 margin_bottom = 148.0
 texture_normal = ExtResource( 4 )
 texture_pressed = ExtResource( 5 )
 texture_hover = ExtResource( 3 )
-texture_disabled = ExtResource( 5 )
-texture_focused = ExtResource( 3 )
 
 [node name="Text" type="Label" parent="List/Quit"]
 anchor_right = 1.0
@@ -113,6 +108,7 @@ margin_left = 1.0
 margin_top = 4.0
 margin_right = 1.0
 margin_bottom = -12.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 6 )
 text = "QUIT"
 align = 1
@@ -123,6 +119,6 @@ valign = 1
 [node name="WipeOut" parent="." instance=ExtResource( 8 )]
 
 [connection signal="pressed" from="List/Play" to="." method="_on_Play_pressed"]
-[connection signal="pressed" from="List/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="List/Controls" to="." method="_on_Controls_pressed"]
 [connection signal="pressed" from="List/Credits" to="." method="_on_Credits_pressed"]
 [connection signal="pressed" from="List/Quit" to="." method="_on_Quit_pressed"]
