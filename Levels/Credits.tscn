@@ -14,8 +14,14 @@ layer = 100
 script = ExtResource( 2 )
 
 [node name="Credits" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -483.5
+margin_top = -272.0
+margin_right = 483.5
+margin_bottom = 272.0
 
 [node name="methape reference (real)" type="TextureRect" parent="Credits"]
 margin_left = 32.0
@@ -42,8 +48,10 @@ custom_fonts/font = ExtResource( 1 )
 text = "THANKS FOR PLAYING COCONUT BONKERS!
 
 GAME CREATED BY BRINE & JOJY GUY
-FOR BRACKEYS GAME JAM 2023.1
 WITH MUSIC BY PUTTAX
+FOR BRACKEYS GAME JAM 2023.1
+
+SPECIAL THANKS: CEREAL & FLAME (MORAL SUPPORT)
 
 SOUND EFFECTS FROM ITCH.IO
 AND OPENGAMEART.ORG
@@ -53,17 +61,17 @@ align = 1
 valign = 1
 
 [node name="SnakePats" type="TextureRect" parent="Credits/Overlay"]
-margin_left = 24.0
-margin_top = 332.0
-margin_right = 276.0
-margin_bottom = 512.0
+margin_left = 19.0
+margin_top = 336.0
+margin_right = 271.0
+margin_bottom = 516.0
 texture = ExtResource( 6 )
 
 [node name="SleepySnek" type="TextureRect" parent="Credits/Overlay"]
-margin_left = 744.0
-margin_top = 256.0
-margin_right = 924.0
-margin_bottom = 436.0
+margin_left = 754.0
+margin_top = 328.0
+margin_right = 934.0
+margin_bottom = 508.0
 texture = ExtResource( 5 )
 
 [node name="WipeIn" parent="Credits" instance=ExtResource( 4 )]

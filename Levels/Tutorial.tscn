@@ -26,8 +26,14 @@ layer = 100
 script = ExtResource( 2 )
 
 [node name="Tutorial" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -483.5
+margin_top = -272.0
+margin_right = 483.5
+margin_bottom = 272.0
 
 [node name="Overlay" type="ColorRect" parent="Tutorial"]
 anchor_right = 1.0
@@ -52,7 +58,7 @@ FOR TREASURE, BUT WATCH OUT FOR SNAKES!
 IF YOU PICK UP A COCONUT, YOU CAN DROP IT
 ON A SNAKE TO DEFEAT IT.
 
-THE COCONUT WILL BREAK, AND IT MIGHT DROP A SHOCEL
+THE COCONUT WILL BREAK, AND IT MIGHT DROP A SHOVEL
 WHICH YOU CAN USE TO DIG FOR GOLD!
 (KEEP IN MIND TREASURE WON'T SPAWN ON EDGE TILES)
 

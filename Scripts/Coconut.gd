@@ -43,7 +43,7 @@ func break():
 
 	# spawn a shovel
 	randomize()
-	if randf() <= 0.65:
+	if randf() <= 0.75:
 		game.dropShovel(get_global_position())
 
 	
